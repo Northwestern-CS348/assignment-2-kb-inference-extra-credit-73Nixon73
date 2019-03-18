@@ -142,7 +142,66 @@ class KnowledgeBase(object):
         """
         ####################################################
         # Student code goes here
+        firstline=""
+        indent="  "
+        #breakpoint()
+        if isinstance(fact_or_rule, Fact):
+            if self.kb_ask(fact_or_rule)==[]:
+                return "Fact is not in the KB"
+            firstline=self.format_fact(fact_or_rule, False)
+        if isinstance(fact_or_rule, Rule):
+            if not isinstance(self._get_rule,Rule):
+                return "Rule is not in the KB"
+            firstline=self.format_rule(fact_or_rule, False)
+        if firstline=="":
+            return False
+        secondline=indent+"SUPPORTED BY"
+        otherlines=[]
+        for pair in fact_or_rule.supported_by:
+            otherlines.append(self.format_rule(pair[1]), True)
+        final=firstline+"\n"+secondline
+        for line in otherlines:
+            final="\n"+indent+indent+line
+        return final
+            
+        
 
+    def format_fact(self, fact, check):
+        output = "fact: ("
+        output = output+fact.statement.predicate
+        for term in fact.statement.terms:
+            output=output+" "
+            output=output+term.term.element
+        output = output + ")"
+        if fact.asserted & check:
+            output=output+" ASSERTED"
+        return output
+
+    def format_rule(self, rule, check):
+        #breakpoint()
+        output="rule: ("
+        #Deal with Statements first
+        for statement in rule.lhs:
+            if rule.lhs.index(statement)!=0:
+                output=output+","
+            #First initialize
+            terms=statement.terms
+            statementprint="("+statement.predicate
+            #add the terms
+            for term in statement.terms:
+                statementprint=statementprint+" "+term.term.element
+            statementprint=statementprint+")"
+        output=output+") -> ("+rule.rhs.statement.predicate
+        for term in rule.rhs.statement.terms:
+            statementprint=statementprint+" "+term.term.element
+        output=output+")"
+        if rule.asserted & check:
+            output=output+" ASSERTED"
+        return output
+
+        
+        
+            
 
 class InferenceEngine(object):
     def fc_infer(self, fact, rule, kb):
