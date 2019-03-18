@@ -158,6 +158,7 @@ class KnowledgeBase(object):
         secondline=indent+"SUPPORTED BY"
         otherlines=[]
         for pair in fact_or_rule.supported_by:
+            otherlines.append(self.format_fact(pair[0]), True)
             otherlines.append(self.format_rule(pair[1]), True)
         final=firstline+"\n"+secondline
         for line in otherlines:
