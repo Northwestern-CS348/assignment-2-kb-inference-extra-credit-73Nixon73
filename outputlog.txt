@@ -1,0 +1,14 @@
+TESTS WITH ERRORS 
+test03 (gradingtests.UnitTests)
+Traceback (most recent call last):
+  File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/gradingtests.py", line 73, in test03
+    actual = self.KB.kb_explain(fact4)
+  File "/Users/k2i/academics/automatedgradingapp/app/testing/kb-inference-ec/student_code.py", line 161, in kb_explain
+    otherlines.append(self.format_fact(pair[0]), True)
+TypeError: format_fact() missing 1 required positional argument: 'check'
+
+-------------------------------
+TESTS FAILED  
+-------------------------------
+TESTS SKIPPED 
+-------------------------------
